@@ -1,6 +1,6 @@
 WebApp : https://air-fuel-predict.streamlit.app/
 <html><body>
-<span style="color: #2E8B57; font-size: 2em;">Aircraft Fuel Consumption Prediction Model</span>
+<span style="color: #2E8B57; font-size: 2em;"><h2>Aircraft Fuel Consumption Prediction Model<h2></span>
 <p style="font-size: 1.2em; color: #555;">This machine learning model estimates aircraft fuel consumption based on flight characteristics using a multiple linear regression algorithm.</p>
 <span style="color: #2E8B57;">Model Overview</span>
 <span style="color: #4682B4;">Model Type:</span> Linear Regression
