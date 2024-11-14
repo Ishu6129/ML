@@ -30,7 +30,7 @@ model=joblib.load("Air_Fuel_Predict/linear_regression_model.pkl")
 
 #Title
 
-st.title("Aircraft Fuel Prediction")
+st.title("✈️ Aircraft Fuel Prediction ✈️")
 
 # Input fields
 f_dist=st.number_input("Figlt Distance : ")
