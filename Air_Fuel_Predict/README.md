@@ -1,5 +1,5 @@
 WebApp : https://air-fuel-predict.streamlit.app/
-<br>
+<html><body>
 <span style="color: #2E8B57; font-size: 2em;">Aircraft Fuel Consumption Prediction Model</span>
 <p style="font-size: 1.2em; color: #555;">This machine learning model estimates aircraft fuel consumption based on flight characteristics using a multiple linear regression algorithm.</p>
 <span style="color: #2E8B57;">Model Overview</span>
@@ -16,3 +16,6 @@ The model requires the following parameters to generate fuel consumption predict
 <span style="color: #4682B4;">Predicted Fuel Consumption:</span> The model returns an estimated value representing the fuel consumption for the specified flight parameters.
 <span style="color: #2E8B57;">Model Requirements</span>
 The serialized model file, linear_regression_model.pkl, must be located in the Air_Fuel_Predict directory within the project structure for predictions to function properly.
+
+</body>
+</html>
