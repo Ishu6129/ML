@@ -28,11 +28,12 @@ st.write("Files in current directory:", os.listdir())
 
 # Load Model
 def load_model():
-    model_path = os.path.join(os.getcwd(), "linear_regression_model.pkl")  # Absolute path
+    # Updated model path to point to 'Air_Fuel_Predict' directory
+    model_path = os.path.join(os.getcwd(), "Air_Fuel_Predict", "linear_regression_model.pkl")
     try:
         return joblib.load(model_path)
     except FileNotFoundError:
-        st.error("Model file not found. Please ensure 'linear_regression_model.pkl' is in the correct directory.")
+        st.error("Model file not found. Please ensure 'linear_regression_model.pkl' is in the 'Air_Fuel_Predict' directory.")
         return None
     except Exception as e:
         st.error(f"An error occurred while loading the model: {e}")
