@@ -26,7 +26,16 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 #Load Model
-model=joblib.load("linear_regression_model.pkl")
+def load_model():
+    try:
+        with open("linear_regression_model.pkl", 'rb') as file:
+            return pickle.load(file)
+    except FileNotFoundError:
+        st.error("Model file not found. Please ensure 'linear_regression_model.pkl' is in the correct directory.")
+    except Exception as e:
+        st.error(f"An error occurred while loading the model: {e}")
+
+model = load_model()
 
 #Title
 
