@@ -28,5 +28,3 @@ The model requires the following parameters to generate fuel consumption predict
 The serialized model file, `linear_regression_model.pkl`, must be located in the `Air_Fuel_Predict` directory within the project structure for predictions to function properly.
 
 ---
-
-This README provides a clear overview of the model, its input requirements, and its expected output.
