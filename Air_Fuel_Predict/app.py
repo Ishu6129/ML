@@ -26,7 +26,7 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 #Load Model
-model=joblib.load("/workspaces/ML/Air_Fuel_Predict/linear_regression_model.pkl")
+model=joblib.load("linear_regression_model.pkl")
 
 #Title
 
