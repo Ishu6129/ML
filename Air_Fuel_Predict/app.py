@@ -1,8 +1,7 @@
 import streamlit as st
 import joblib
 import pandas as pd
-import numpy as np
-import pickle 
+import os
 
 # Background image URL
 background_image = "https://royalwestindies.com/wp-content/uploads/2017/11/flight-back.jpg"
@@ -23,10 +22,15 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 
+# Check current directory and list files for debugging
+st.write("Current directory:", os.getcwd())
+st.write("Files in current directory:", os.listdir())
+
 # Load Model
 def load_model():
+    model_path = os.path.join(os.getcwd(), "linear_regression_model.pkl")  # Absolute path
     try:
-        return joblib.load('linear_regression_model.pkl')
+        return joblib.load(model_path)
     except FileNotFoundError:
         st.error("Model file not found. Please ensure 'linear_regression_model.pkl' is in the correct directory.")
         return None
