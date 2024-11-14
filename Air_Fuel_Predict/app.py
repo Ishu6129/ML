@@ -25,7 +25,7 @@ st.markdown(f"""
 # Load Model
 def load_model():
     try:
-        return joblib.load("linear_regression_model.pkl")
+        return joblib.load('linear_regression_model.pkl')
     except FileNotFoundError:
         st.error("Model file not found. Please ensure 'linear_regression_model.pkl' is in the correct directory.")
         return None
