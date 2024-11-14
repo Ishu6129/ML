@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import pickle 
 
+# Background image URL
 background_image = "https://royalwestindies.com/wp-content/uploads/2017/11/flight-back.jpg"
 
 # Set the image as the background using CSS
@@ -39,10 +40,10 @@ model = load_model()
 st.title("Aircraft Fuel Prediction")
 
 # Input fields
-f_dist = st.number_input("Flight Distance:")
+f_dist = st.number_input("Flight Distance:", min_value=0.0, max_value=20000.0, step=1.0)
 f_type = st.selectbox("Select Type:", ["Type1", "Type2", "Type3"])
-f_duration = st.number_input("Flight Duration (Hours):")
-no_of_pass = st.number_input("Number of Passengers:")
+f_duration = st.number_input("Flight Duration (Hours):", min_value=0.0, max_value=24.0, step=0.1)
+no_of_pass = st.number_input("Number of Passengers:", min_value=0, max_value=500, step=1)
 
 # Create input data DataFrame
 input_data = pd.DataFrame({
@@ -57,7 +58,10 @@ input_data = pd.DataFrame({
 # Prediction button
 if st.button("Predict"):
     if model is not None:
-        fuel_consumption = model.predict(input_data)
-        st.write("Predicted Fuel Consumption:", fuel_consumption[0])
+        try:
+            fuel_consumption = model.predict(input_data)
+            st.write("Predicted Fuel Consumption: {:.2f} units".format(fuel_consumption[0]))
+        except Exception as e:
+            st.error(f"An error occurred during prediction: {e}")
     else:
         st.error("Model could not be loaded, so prediction is unavailable.")
