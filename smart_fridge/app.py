@@ -1,20 +1,15 @@
 import numpy as np
 import pandas as pd
-import pickle
+import joblib
 from datetime import datetime
 from flask import Flask, request, jsonify
-from sklearn.preprocessing import LabelEncoder
-
-# Load the trained model
-with open('smart_fridge.pkl', 'rb') as f:
-    model = pickle.load(f)
 
 # Initialize Flask app
 app = Flask(__name__)
 
-# Initialize label encoder used during training
-label_encoder = LabelEncoder()
-label_encoder.fit(['Item A', 'Item B', 'Item C'])  # Use the same labels as in the training set
+# Load the trained model and label encoder
+model = joblib.load('smart_fridge_model.pkl')
+label_encoder = joblib.load('label_encoder.pkl')
 
 # Helper function to process the input data
 def process_input(data):
@@ -40,17 +35,20 @@ def process_input(data):
 # Route for prediction
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Get input data from request
-    data = request.json
-    
-    # Process input data
-    features = process_input(data)
-    
-    # Make prediction
-    prediction = model.predict(features)
-    
-    # Return the prediction as JSON
-    return jsonify({'predicted_consumption_days': prediction[0]})
+    try:
+        # Get input data from request
+        data = request.json
+        
+        # Process input data
+        features = process_input(data)
+        
+        # Make prediction
+        prediction = model.predict(features)
+        
+        # Return the prediction as JSON
+        return jsonify({'predicted_consumption_days': prediction[0]})
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
     app.run(debug=True)
