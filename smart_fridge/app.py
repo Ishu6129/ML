@@ -6,7 +6,7 @@ from sklearn.preprocessing import LabelEncoder
 from datetime import datetime
 
 # Load the saved model
-with open('smart_fridge.pkl', 'rb') as f:
+with open('smart_fridge/smart_fridge.pkl', 'rb') as f:
     model = pickle.load(f)
 
 # Label Encoder for product names (used during model training)
