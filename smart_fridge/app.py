@@ -1,54 +1,43 @@
-import numpy as np
+import streamlit as st
 import pandas as pd
-import joblib
+import numpy as np
+import pickle
+from sklearn.preprocessing import LabelEncoder
 from datetime import datetime
-from flask import Flask, request, jsonify
 
-# Initialize Flask app
-app = Flask(__name__)
+# Load the saved model
+with open('smart_fridge.pkl', 'rb') as f:
+    model = pickle.load(f)
 
-# Load the trained model and label encoder
-model = joblib.load('smart_fridge_model.pkl')
-label_encoder = joblib.load('label_encoder.pkl')
+# Label Encoder for product names (used during model training)
+label_encoder = LabelEncoder()
+label_encoder.fit(['Item A', 'Item B', 'Item C'])  # Add your unique product names here
 
-# Helper function to process the input data
-def process_input(data):
-    # Convert date strings to datetime
-    manufacturing_date = datetime.strptime(data['Manufacturing Date'], '%Y-%m-%d')
-    expiry_date = datetime.strptime(data['Expiry Date'], '%Y-%m-%d')
-    purchase_date = datetime.strptime(data['Purchase Date'], '%Y-%m-%d')
-    consumption_date = datetime.strptime(data['Consumption Date'], '%Y-%m-%d')
+# Streamlit app layout
+st.title('Smart Fridge Product Consumption Predictor')
 
-    # Feature Engineering
-    age = (purchase_date - manufacturing_date).days
-    remaining_shelf_life = (expiry_date - purchase_date).days
-    time_to_consumption = (consumption_date - purchase_date).days
+# Input fields for user to enter product data
+product_name = st.selectbox('Select Product', ['Item A', 'Item B', 'Item C'])
+manufacturing_date = st.date_input('Manufacturing Date', datetime.today())
+purchase_date = st.date_input('Purchase Date', datetime.today())
+expiry_date = st.date_input('Expiry Date', datetime.today())
+consumption_date = st.date_input('Consumption Date', datetime.today())
+
+# Button to predict
+if st.button('Predict Time to Consumption'):
+    # Feature engineering based on user input
+    age = (pd.to_datetime(purchase_date) - pd.to_datetime(manufacturing_date)).days
+    remaining_shelf_life = (pd.to_datetime(expiry_date) - pd.to_datetime(purchase_date)).days
+    time_to_consumption = (pd.to_datetime(consumption_date) - pd.to_datetime(purchase_date)).days
     
-    # Encode product name
-    product_name_encoded = label_encoder.transform([data['Product Name']])[0]
+    # Encode the product name
+    product_name_encoded = label_encoder.transform([product_name])[0]
     
-    # Prepare feature vector
-    features = np.array([[age, remaining_shelf_life, product_name_encoded]])
+    # Prepare the feature vector for prediction
+    X_new = np.array([[age, remaining_shelf_life, product_name_encoded]])
     
-    return features
-
-# Route for prediction
-@app.route('/predict', methods=['POST'])
-def predict():
-    try:
-        # Get input data from request
-        data = request.json
-        
-        # Process input data
-        features = process_input(data)
-        
-        # Make prediction
-        prediction = model.predict(features)
-        
-        # Return the prediction as JSON
-        return jsonify({'predicted_consumption_days': prediction[0]})
-    except Exception as e:
-        return jsonify({'error': str(e)})
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    # Make prediction
+    predicted_consumption_days = model.predict(X_new)
+    
+    # Display the result
+    st.write(f'Predicted Time to Consumption (in days): {predicted_consumption_days[0]:.0f}')
