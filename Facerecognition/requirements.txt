@@ -4,5 +4,4 @@ pillow
 scikit-learn
 joblib
 face_recognition
-glob
 numpy
