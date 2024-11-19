@@ -2,3 +2,4 @@ opencv-python-headless
 opencv-python
 streamlit
 streamlit_webrtc
+Pillow
