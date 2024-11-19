@@ -60,7 +60,7 @@ def main():
 
     # Initialize face recognition
     sfr = SimpleFacerec()
-    sfr.load_encoding_images("img_dataset/")  # Folder with stored images
+    sfr.load_encoding_images("Facerecognition/img_dataset/")  # Folder with stored images
     st.sidebar.header("Face Recognition Settings")
     st.sidebar.write(f"Loaded {len(sfr.known_face_names)} known faces.")
 
