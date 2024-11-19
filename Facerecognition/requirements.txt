@@ -1,6 +1,7 @@
 streamlit
 opencv-python
 pillow
+dlib
 scikit-learn
 joblib
 face_recognition
