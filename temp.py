@@ -5,7 +5,7 @@ def main():
     st.title("Camera Feed")
 
     # Attempt to open the camera
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
 
     if not cap.isOpened():
         st.error("Could not open the camera. Please check your device or permissions.")
