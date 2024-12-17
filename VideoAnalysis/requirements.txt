@@ -1,0 +1,7 @@
+face-recognition==1.3.0
+numpy==1.23.5
+opencv-python-headless==4.8.0.74
+mediapipe==0.10.0
+pyttsx3==2.90
+streamlit==1.26.0
+simple-facerec==1.0.0
